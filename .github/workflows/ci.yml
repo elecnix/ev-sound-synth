@@ -1,0 +1,39 @@
+name: ci
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ["3.11", "3.12", "3.13"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+      - run: pip install numpy pytest
+      - run: python -m pytest -q
+
+  render:
+    # The README claims the pedestrian alert passes FMVSS No. 141. This renders
+    # the files and re-measures them, so the claim is checked, not asserted.
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install numpy
+      - run: python -m evsound.render --all
+      - run: python -m evsound.verify
+      - uses: actions/upload-artifact@v4
+        with:
+          name: rendered-audio
+          path: out/
+          retention-days: 14

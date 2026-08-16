@@ -1,0 +1,32 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "ev-sound-synth"
+version = "1.0.0"
+description = "Electric vehicle sound synthesis: an FMVSS 141 pedestrian alert, motor orders, inverter whine and an interior performance sound, all from a drive-unit model"
+readme = "README.md"
+requires-python = ">=3.11"
+license = "MIT"
+keywords = ["audio", "synthesis", "dsp", "electric-vehicle", "avas", "fmvss-141", "psychoacoustics"]
+classifiers = [
+    "Intended Audience :: Developers",
+    "Intended Audience :: Science/Research",
+    "Programming Language :: Python :: 3",
+    "Topic :: Multimedia :: Sound/Audio :: Sound Synthesis",
+]
+dependencies = ["numpy>=1.24"]
+
+[project.optional-dependencies]
+test = ["pytest>=7"]
+
+[project.scripts]
+evsound-render = "evsound.render:main"
+evsound-verify = "evsound.verify:main"
+
+[tool.setuptools.packages.find]
+include = ["evsound*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

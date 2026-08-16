@@ -1,0 +1,13 @@
+# Rendered audio ships as release artifacts, never in the repository.
+out/
+*.wav
+
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.venv/
+venv/
+*.egg-info/
+build/
+dist/
+.DS_Store
